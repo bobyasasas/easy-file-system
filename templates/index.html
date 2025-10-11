@@ -1,0 +1,89 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件上传下载</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>文件上传下载系统</h1>
+
+    <!-- 显示flash消息 -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- 路径面包屑 -->
+    <div class="breadcrumb">
+        <a href="{{ url_for('index') }}">根目录</a>
+        {% if current_folder %}
+            {% set path_parts = current_folder.split('/') %}
+            {% for i in range(path_parts|length) %}
+                {% set path_up_to_here = path_parts[:i+1]|join('/') %}
+                / <a href="{{ url_for('index', folder_path=path_up_to_here) }}">{{ path_parts[i] }}</a>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+<!-- 文件列表 -->
+<div class="file-list">
+    <h2>文件和文件夹</h2>
+    {% if parent_path is not none %}
+        <div class="file-item">
+            <span class="folder-icon">📁</span>
+            <a href="{% if parent_path == '' %}{{ url_for('index') }}{% else %}{{ url_for('index', folder_path=parent_path) }}{% endif %}" class="folder-link">.. (返回上级目录)</a>
+        </div>
+    {% endif %}
+
+    {% if items %}
+        {% for item in items %}
+            <div class="file-item">
+                {% if item.is_dir %}
+                    <span class="folder-icon">📁</span>
+                    <a href="{{ url_for('index', folder_path=item.path) }}" class="folder-link">{{ item.name }}</a>
+                {% else %}
+                    <span class="file-icon">📄</span>
+                    <a href="{{ url_for('download_file', filename=item.path) }}" class="download-link">{{ item.name }}</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>此文件夹为空</p>
+    {% endif %}
+</div>
+
+
+    <!-- 分隔线 -->
+    <hr class="divider">
+
+    <!-- 文件上传表单 -->
+ <!-- 文件上传表单 -->
+<div class="upload-section">
+    <h2>上传文件到当前目录</h2>
+    <form method="post" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <input type="hidden" name="folder_path" value="{{ current_folder if current_folder else '' }}">
+        <button type="submit" class="upload-btn">上传</button>
+    </form>
+</div>
+
+<!-- 创建文件夹表单 -->
+<div class="upload-section">
+    <h2>在当前目录创建文件夹</h2>
+    <form method="post" action="/create_folder">
+        <input type="text" name="folder_name" placeholder="文件夹名称" required>
+        <input type="hidden" name="folder_path" value="{{ current_folder if current_folder else '' }}">
+        <button type="submit" class="create-folder-btn">创建文件夹</button>
+    </form>
+</div>
+
+</body>
+</html>

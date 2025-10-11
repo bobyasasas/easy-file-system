@@ -1,0 +1,165 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.upload-section {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 0 0 20px 0;
+}
+.file-list {
+    margin-top: 20px;
+}
+.file-item {
+    padding: 12px 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+.file-item:last-child {
+    border-bottom: none;
+}
+.upload-btn, .create-folder-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 10px;
+}
+.upload-btn:hover, .create-folder-btn:hover {
+    background-color: #45a049;
+}
+.download-link, .folder-link {
+    color: #1E90FF;
+    text-decoration: none;
+    margin-left: 10px;
+    flex-grow: 1;
+    padding: 8px 0;
+}
+.download-link:hover, .folder-link:hover {
+    text-decoration: underline;
+}
+.flash-messages {
+    background-color: #dff0d8;
+    color: #3c763d;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+.folder-icon {
+    color: #FFA500;
+    margin-right: 10px;
+    font-size: 18px;
+}
+.file-icon {
+    color: #1E90FF;
+    margin-right: 10px;
+    font-size: 18px;
+}
+h1 {
+    font-size: 24px;
+    text-align: center;
+}
+h2 {
+    font-size: 20px;
+}
+.divider {
+    border: 0;
+    height: 1px;
+    background-color: #ccc;
+    margin: 30px 0;
+}
+.breadcrumb {
+    margin-bottom: 15px;
+    font-size: 16px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 5px 0;
+}
+.breadcrumb a {
+    color: #1E90FF;
+    text-decoration: none;
+    padding: 5px;
+}
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+.folder-actions {
+    margin: 10px 0;
+}
+.folder-actions input[type="text"] {
+    padding: 12px;
+    font-size: 16px;
+    margin-right: 5px;
+    width: 70%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.folder-actions button {
+    width: 25%;
+    padding: 12px;
+}
+input[type="file"] {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    .upload-section {
+        padding: 15px;
+        width: 100%;
+    }
+    .file-item {
+        flex-direction: row;
+        align-items: center;
+        padding: 15px 5px;
+    }
+    .folder-actions input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .folder-actions button {
+        width: 100%;
+    }
+    h1 {
+        font-size: 22px;
+    }
+    h2 {
+        font-size: 18px;
+    }
+    .file-icon, .folder-icon {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+    .file-item {
+        padding: 12px 3px;
+        font-size: 15px;
+    }
+    .upload-btn, .create-folder-btn {
+        padding: 14px;
+        font-size: 16px;
+    }
+    .flash-messages {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
