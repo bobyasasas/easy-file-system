@@ -4,39 +4,20 @@ on:
   push:
     branches: [ "main" ]
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: bobyasasas docker  # 指定环境名称
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: Debug secrets
-      run: |
-        echo "Username length: ${#DOCKERHUB_USERNAME}"
-        echo "Token length: ${#DOCKERHUB_TOKEN}"
-        echo "Username: '${DOCKERHUB_USERNAME}'"
-      env:
-        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-
     - name: Build Docker image
-      if: env.DOCKERHUB_USERNAME != ''
-      run: |
-        echo "Building image: ${{ secrets.DOCKERHUB_USERNAME }}/easy_file_system"
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/easy_file_system .
-      env:
-        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/easy_file_system .
 
     - name: Login to DockerHub
-      if: env.DOCKERHUB_USERNAME != ''
       run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-      env:
-        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Push to DockerHub
-      if: env.DOCKERHUB_USERNAME != ''
       run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/easy_file_system
-      env:
-        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
