@@ -131,4 +131,4 @@ def create_folder():
 
     return redirect(url_for('index', folder_path=parent_path if parent_path else None))
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True, port=80)
